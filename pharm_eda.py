@@ -2,46 +2,46 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-print("Ξεκινάει η Εξερευνητική Ανάλυση Δεδομένων (EDA)...")
+print("[INFO] Initializing Exploratory Data Analysis (EDA) pipeline...")
 
-# 1. Φόρτωση των καθαρών δεδομένων
+# 1. Load cleaned clinical dataset
 df = pd.read_csv("openfda_clean_data.csv")
 
-# Ρύθμιση του αισθητικού στυλ των γραφημάτων
+# Set visualization style aesthetics
 sns.set_theme(style="whitegrid")
 
-# 2. Γράφημα 1: Κατανομή Σοβαρότητας Παρενεργειών
+# 2. Figure 1: Adverse Event Severity Class Distribution
 plt.figure(figsize=(6, 4))
 sns.countplot(data=df, x='serious', palette='Set2')
-plt.title('Severity of Adverse Events (0 = Non-Serious, 1 = Serious)')
-plt.xlabel('Serious')
-plt.ylabel('Count')
+plt.title('Clinical Severity Distribution (0 = Non-Serious, 1 = Serious)')
+plt.xlabel('Severity Class Index')
+plt.ylabel('Report Volume')
 plt.tight_layout()
 plt.savefig('eda_1_severity_distribution.png')
 plt.close()
-print("- Δημιουργήθηκε το eda_1_severity_distribution.png")
+print("[INFO] Artifact generated: 'eda_1_severity_distribution.png'")
 
-# 3. Γράφημα 2: Ηλικιακή Κατανομή των Ασθενών
+# 3. Figure 2: Patient Demographic Age Distribution
 plt.figure(figsize=(8, 5))
 sns.histplot(data=df, x='patient_age', bins=10, kde=True, color='skyblue')
-plt.title('Patient Age Distribution in Reported Events')
-plt.xlabel('Age')
-plt.ylabel('Frequency')
+plt.title('Patient Demographic Age Distribution in Safety Reports')
+plt.xlabel('Patient Age (Years)')
+plt.ylabel('Observation Frequency')
 plt.tight_layout()
 plt.savefig('eda_2_age_distribution.png')
 plt.close()
-print("- Δημιουργήθηκε το eda_2_age_distribution.png")
+print("[INFO] Artifact generated: 'eda_2_age_distribution.png'")
 
-# 4. Γράφημα 3: Top Φάρμακα με τις περισσότερες αναφορές
+# 4. Figure 3: High-Frequency Medicinal Products
 plt.figure(figsize=(10, 6))
 top_drugs = df['drug_name'].value_counts().nlargest(5)
 sns.barplot(y=top_drugs.index, x=top_drugs.values, palette='viridis')
-plt.title('Top 5 Drugs by Number of Adverse Event Reports')
-plt.xlabel('Number of Reports')
-plt.ylabel('Drug Name')
+plt.title('Top 5 Medicinal Products by Safety Report Frequency')
+plt.xlabel('Total Adverse Event Reports')
+plt.ylabel('Medicinal Product Name')
 plt.tight_layout()
 plt.savefig('eda_3_top_drugs.png')
 plt.close()
-print("- Δημιουργήθηκε το eda_3_top_drugs.png")
+print("[INFO] Artifact generated: 'eda_3_top_drugs.png'")
 
-print("Η ανάλυση ολοκληρώθηκε! Άνοιξε τον φάκελο 'pharmacovigilance_pipeline' για να δεις τις εικόνες.")
+print("[SUCCESS] Exploratory Data Analysis execution complete. Artifacts successfully written to storage.")
